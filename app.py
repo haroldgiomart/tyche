@@ -8,7 +8,7 @@ app = Flask(__name__)
 # =========================
 TRANSAK_API_KEY = os.getenv(
     "TRANSAK_API_KEY",
-    "STAGING_API_KEY_AQUI"  # <-- reemplaza por tu API Key de STAGING
+    "cd9a1ba5-0d99-4d95-8b5b-a1ca303d3b3b"
 )
 
 WALLET_ADDRESS = os.getenv(
