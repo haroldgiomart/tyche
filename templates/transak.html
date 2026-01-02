@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Cargar USDC</title>
+
+  <!-- SDK OFICIAL TRANSAK -->
+  <script src="https://global.transak.com/sdk/v1.1/widget.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    button {
+      padding: 16px 28px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      background-color: #22c55e;
+      color: black;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<button onclick="openTransak()">Cargar USDC</button>
+
+<script>
+  function openTransak() {
+    const transak = new TransakSDK.default({
+      apiKey: "{{ transak_api_key }}",
+      environment: "STAGING",   // cambiar a PRODUCTION luego del KYB
+
+      // ===== ON-RAMP CONFIG =====
+      cryptoCurrencyCode: "USDC",
+      network: "arbitrum",
+      walletAddress: "{{ wallet_address }}",
+
+      fiatCurrency: "USD",
+      defaultFiatAmount: 50,
+
+      disableWalletAddressForm: true,
+      hideMenu: true
+    });
+
+    transak.init();
+
+    transak.on(transak.EVENTS.TRANSAK_ORDER_SUCCESSFUL, (orderData) => {
+      console.log("Orden creada:", orderData);
+      alert("Pago iniciado correctamente");
+    });
+
+    transak.on(transak.EVENTS.TRANSAK_WIDGET_CLOSE, () => {
+      transak.close();
+    });
+  }
+</script>
+
+</body>
+</html>
